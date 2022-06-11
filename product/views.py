@@ -6,4 +6,4 @@ from django.shortcuts import render
 # Create your views here.
 
 def productList(requsest):
-    pass
+    return render(requsest, 'product.html')
