@@ -8,7 +8,7 @@ def dashboard(request):
     customers=Customer.objects.all()
     orders=Order.objects.all()
     total_order=Order.objects.all().count()
-    delivered=orders.filter(status='Delivered').count()
+    delivered=orders.filter(status='Delivery').count()
     pending=orders.filter(status='Pending').count()
 
     context={'customers':customers, 'orders':orders,
