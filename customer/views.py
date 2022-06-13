@@ -4,14 +4,20 @@ from django.shortcuts import get_object_or_404, render
 from customer.models import Customer
 from product.models import Order
 from customer.forms import CustomerForm
+from customer.filters import OrderFilter
 # Create your views here.
 def customer_list(request, pk):
     customer=Customer.objects.get(id=pk)
     orders=customer.order_set.all()
     order_count=orders.count()
+
+    myFilter=OrderFilter(request.GET, queryset=orders)
+    orders=myFilter.qs
+
     context={'customer':customer,
     'orders':orders,
     'orders_count':order_count,
+    'myFilter':myFilter,
     'title':'Customer'}
     return render(request, 'customers.html', context)
 
