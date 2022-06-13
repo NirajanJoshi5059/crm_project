@@ -1,7 +1,9 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, reverse
 from product.models import Order, Product
+from customer.models import Customer
 from product.forms import OrderForm
+from django.forms import inlineformset_factory
 # Create your views here.
 
 def productList(request):
@@ -10,13 +12,17 @@ def productList(request):
     
     return render(request, 'product.html', context)
 
-def createOrder(request):
-    form=OrderForm(request.POST or None)
+def createOrder(request,id):
+    OrderFormSet=inlineformset_factory(Customer, Order, fields=('product','status'), extra=5)
+    customer=Customer.objects.get(id=id)
+    formset=OrderFormSet(queryset=Order.objects.none(),instance=customer)
+    # form=OrderForm(request.POST or None, initial={'customer':customer})
     if request.POST:
-        if form.is_valid():
-            form.save()
+        formset=OrderFormSet(request.POST, instance=customer)
+        if formset.is_valid():
+            formset.save()
             return HttpResponseRedirect(reverse('user:dashboard'))
-    context={'form':form}
+    context={'formset':formset,'customer':customer}
     return render(request, 'create_order.html', context)
 
 
