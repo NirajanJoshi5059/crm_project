@@ -47,13 +47,5 @@ def deleteOrder(request, id):
     return render(request, 'delete.html', context)
 
 
-# def updateorder(request, id):
-#     order=Order.objects.get(id=id)
-#     form=OrderForm(request.POST or None, instance=order)
-#     if request.POST:
-#         if form.is_valid():
-#             form.save()
-#             return HttpResponseRedirect(reverse('user:dashboard'))
-    
-#     context={'form':form}
-#     return render(request, 'create_order.html', context)
+def search(request):
+    return (1)

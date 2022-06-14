@@ -1,5 +1,5 @@
 from django.urls import path
-from product.views import productList, createOrder, updateOrder, deleteOrder
+from product.views import productList, createOrder, updateOrder, deleteOrder, search
 
 app_name='product'
 
@@ -8,5 +8,6 @@ urlpatterns=[
     path('create-order/<int:id>', createOrder, name='create_order'),
     path('update-order/<int:id>',updateOrder, name='update_order'),
     path('delete-order/<int:id>', deleteOrder, name='delete_order'),
+    path('search/', search, name='search'),
     
 ]

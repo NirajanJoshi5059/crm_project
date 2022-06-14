@@ -14,6 +14,7 @@ def dashboard(request):
     context={'customers':customers, 'orders':orders,
     'total_order':total_order,
     'delivered':delivered,
-    'pending':pending
+    'pending':pending,
+    'title':'Dashboard'
     }
     return render(request,'dashboard.html', context)
