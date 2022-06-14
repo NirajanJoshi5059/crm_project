@@ -4,14 +4,15 @@ from product.models import Order, Product
 from customer.models import Customer
 from product.forms import OrderForm
 from django.forms import inlineformset_factory
+from django.contrib.auth.decorators import login_required
 # Create your views here.
-
+@login_required(login_url='user:login')
 def productList(request):
     products= Product.objects.all()
     context={'products':products}
     
     return render(request, 'product.html', context)
-
+@login_required(login_url='user:login')
 def createOrder(request,id):
     OrderFormSet=inlineformset_factory(Customer, Order, fields=('product','status'), extra=5)
     customer=Customer.objects.get(id=id)
@@ -25,7 +26,7 @@ def createOrder(request,id):
     context={'formset':formset,'customer':customer}
     return render(request, 'create_order.html', context)
 
-
+@login_required(login_url='user:login')
 def updateOrder(request, id):
     order=get_object_or_404(Order, id=id)
     formset=OrderForm(instance=order)
@@ -37,7 +38,7 @@ def updateOrder(request, id):
     context={'formset':formset}
     return render(request, 'create_order.html', context)
 
-
+@login_required(login_url='user:login')
 def deleteOrder(request, id):
     order=get_object_or_404(Order, id=id)
     if request.POST:
