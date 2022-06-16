@@ -1,3 +1,5 @@
+from multiprocessing import context
+from re import A
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, reverse
 from customer.models import Customer
@@ -7,10 +9,11 @@ from django.contrib.auth.forms import AuthenticationForm
 from user.forms import CreateUserForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from user.decorators import unauthenticated
+from user.decorators import unauthenticated, allowed_users
 # Create your views here.
 
 @login_required(login_url='user:login')
+@allowed_users(allowed_roles=['admin'])
 def dashboard(request):
     customers=Customer.objects.all()
     orders=Order.objects.all()
@@ -58,3 +61,7 @@ def register_view(request):
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse('user:login'))
+
+def user_view(request):
+    context={}
+    return render(request,'user.html', context)
