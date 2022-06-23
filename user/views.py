@@ -57,7 +57,7 @@ def register_view(request):
             username=form.cleaned_data.get('username')
             group=Group.objects.get(name='customer')
             user.groups.add(group)
-            Customer.objects.create(user=user)
+            # Customer.objects.create(user=user)
             messages.success(request, "Account has been created for "+username)
             return HttpResponseRedirect(reverse('user:login'))
     context={'form':form}

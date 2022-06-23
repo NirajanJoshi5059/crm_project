@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     #custom app
     'customer',
     'product',
-    'user',
+    'user.apps.BaseConfig',
 
     #django filter
     'django_filters',
@@ -128,6 +128,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS= [BASE_DIR/'staticfiles',]
 
 MEDIA_URL= '/images/'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

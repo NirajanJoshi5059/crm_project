@@ -4,7 +4,7 @@ from customer.models import Customer
 
 @admin.register(Customer)
 class CustomerAdmin(admin.ModelAdmin):
-    list_display=('name','email','phone','date_created',)
+    list_display=('firstname','lastname','email','phone','date_created',)
 
 
 # admin.site.register(Customer)

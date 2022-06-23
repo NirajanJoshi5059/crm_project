@@ -1,4 +1,3 @@
-from audioop import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from customer.models import Customer
@@ -6,6 +5,7 @@ from product.models import Order
 from customer.forms import CustomerForm
 from customer.filters import OrderFilter
 from django.contrib.auth.decorators import login_required
+from user.decorators import allowed_users
 # Create your views here.
 @login_required(login_url='user:login')
 def customer_list(request, pk):
@@ -35,3 +35,15 @@ def updateCustomer(request, id):
 
 def deleteCustomer(request,id):
     return render(request, 'customers.html')
+
+
+@login_required(login_url='user:login')
+@allowed_users(allowed_roles=['customer'])
+def accountsetting(request):
+    user=request.user.customer
+    form=CustomerForm(request.POST or None, request.FILES or None, instance=user)
+    if request.POST:
+        if form.is_valid:
+            form.save
+    context={'form':form}
+    return render(request,'account_setting.html', context)
